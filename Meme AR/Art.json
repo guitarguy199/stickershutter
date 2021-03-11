@@ -1,0 +1,37 @@
+[
+{
+    "body" : "Starry Night",
+    "image" : "starry-night.png"
+},
+
+{
+    "body" : "No. 5 1948, Pollock",
+    "image" : "no-5-pollock.png"
+},
+
+{
+    "body" : "Melting Clocks",
+    "image" : "clocks.png"
+},
+
+{
+    "body" : "Mona Lisa",
+    "image": "mona-lisa.png"
+},
+
+{
+    "body" : "The Great Wave",
+    "image" : "the-great-wave.png"
+},
+
+{
+    "body" : "American Gothic",
+    "image" : "american-gothic.png"
+},
+
+{
+    "body" : "Floral Mandala",
+    "image" : "flower-mandala.png"
+}
+
+]

@@ -1,0 +1,22 @@
+[
+{
+    "body" : "Open Sign",
+    "image" : "open-sign.png"
+},
+
+{
+    "body" : "Closed Sign",
+    "image" : "closed-sign.png"
+},
+
+{
+    "body" : "City Skyline",
+    "image" : "skyline.png"
+},
+
+{
+    "body" : "Sports Sedan",
+    "image" : "bmw.png"
+}
+
+]
