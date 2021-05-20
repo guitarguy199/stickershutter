@@ -43,7 +43,7 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
         view.bringSubviewToFront(shareOutlet)
         view.bringSubviewToFront(creditsOutlet)
         view.bringSubviewToFront(labelView)
-        labelView.adUnitID = ids.bannerThree
+        labelView.adUnitID = ids.bannerTest
         labelView.rootViewController = self
         labelView.delegate = self
  
@@ -64,7 +64,7 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
     }
     
     func loadAd() {
-        let id = ids.intTwo
+        let id = ids.intTest
         GADInterstitialAd.load(withAdUnitID: id, request: GADRequest()) { (ad, error) in
             if error != nil { return }
             self.ad = ad

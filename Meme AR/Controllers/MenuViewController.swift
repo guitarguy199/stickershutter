@@ -56,7 +56,7 @@ class MenuViewController: UIViewController, GADFullScreenContentDelegate {
         self.collectionView.dataSource = self
         self.setupGridView()
         self.collectionView.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "categoryCellID")
-        bannerView.adUnitID = ids.bannerOne
+        bannerView.adUnitID = ids.bannerTest
         bannerView.rootViewController = self
         bannerView.delegate = self
         
@@ -118,7 +118,7 @@ class MenuViewController: UIViewController, GADFullScreenContentDelegate {
     
     func loadAd() {
         
-        let id = ids.intOne
+        let id = ids.intTest
               GADInterstitialAd.load(withAdUnitID: id, request: GADRequest()) { ad, error in
                    if error != nil { return }
                    self.ad = ad

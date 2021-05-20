@@ -63,7 +63,7 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         camButtonAppearance()
         setupARView()
         
-        bannerView.adUnitID = ids.bannerTwo
+        bannerView.adUnitID = ids.bannerTest
         bannerView.rootViewController = self
         bannerView.delegate = self
         
