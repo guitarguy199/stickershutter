@@ -47,7 +47,6 @@
 		1B16212525F7127000C13E30 /* bmw.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B16212125F7126F00C13E30 /* bmw.png */; };
 		1B16212625F7127000C13E30 /* open-sign.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B16212225F7126F00C13E30 /* open-sign.png */; };
 		1B16212725F7127000C13E30 /* closed-sign.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B16212325F7127000C13E30 /* closed-sign.png */; };
-		1B16212F25F7140B00C13E30 /* SSMenuLabel.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B16212E25F7140B00C13E30 /* SSMenuLabel.png */; };
 		1B16213325F718D100C13E30 /* stickershutterhelpmenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B16213225F718D100C13E30 /* stickershutterhelpmenu.png */; };
 		1B16213B25F7EE3E00C13E30 /* IDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B16213A25F7EE3E00C13E30 /* IDs.swift */; };
 		1B16214025F9569200C13E30 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B16213F25F9569200C13E30 /* StoreKit.framework */; };
@@ -119,7 +118,6 @@
 		1B16212125F7126F00C13E30 /* bmw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bmw.png; sourceTree = "<group>"; };
 		1B16212225F7126F00C13E30 /* open-sign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "open-sign.png"; sourceTree = "<group>"; };
 		1B16212325F7127000C13E30 /* closed-sign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "closed-sign.png"; sourceTree = "<group>"; };
-		1B16212E25F7140B00C13E30 /* SSMenuLabel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSMenuLabel.png; path = ../../SSMenuLabel.png; sourceTree = "<group>"; };
 		1B16213225F718D100C13E30 /* stickershutterhelpmenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stickershutterhelpmenu.png; sourceTree = "<group>"; };
 		1B16213A25F7EE3E00C13E30 /* IDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDs.swift; sourceTree = "<group>"; };
 		1B16213F25F9569200C13E30 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -270,7 +268,6 @@
 				1B1620C125F70D9800C13E30 /* Lifestyle.json */,
 				1B398CC525D78D6E0039318D /* categories.json */,
 				1B16213225F718D100C13E30 /* stickershutterhelpmenu.png */,
-				1B16212E25F7140B00C13E30 /* SSMenuLabel.png */,
 				1B63067425BE529E002E9A2E /* LaunchScreen.storyboard */,
 				1B63067725BE529E002E9A2E /* Info.plist */,
 			);
@@ -399,7 +396,6 @@
 				1B16211225F711D300C13E30 /* rollsafe.png in Resources */,
 				1B16211725F711D300C13E30 /* chairbernie.png in Resources */,
 				1B16213325F718D100C13E30 /* stickershutterhelpmenu.png in Resources */,
-				1B16212F25F7140B00C13E30 /* SSMenuLabel.png in Resources */,
 				1B15EAF325CB5FF600918014 /* surprisedpikachu.png in Resources */,
 				1B1620FC25F7117200C13E30 /* e3.png in Resources */,
 				1B1620DD25F7113D00C13E30 /* flower-mandala.png in Resources */,

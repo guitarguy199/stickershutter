@@ -31,9 +31,9 @@ class CategoryCell: UICollectionViewCell {
         bgView.bringSubviewToFront(categoryLabel)
         bgView.bringSubviewToFront(categoryImageView)
         bgView.layer.shadowColor = UIColor.black.cgColor
-        bgView.layer.shadowRadius = 2.5
+        bgView.layer.shadowRadius = 2.0
         bgView.layer.shadowOffset = .zero
-        bgView.layer.shadowOpacity = 1
+        bgView.layer.shadowOpacity = 0.5
     }
 
     func setData(category: String, image: String) {

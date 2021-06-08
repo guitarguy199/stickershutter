@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WfR-Jg-uY8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WfR-Jg-uY8">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -27,7 +27,7 @@
                                     <inset key="sectionInset" minX="25" minY="25" maxX="25" maxY="25"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="babyfuckinganimals" id="EsP-Uq-rFI">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageview" id="EsP-Uq-rFI">
                                         <rect key="frame" x="25" y="25" width="120" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0j1-W3-WiI">
@@ -44,14 +44,16 @@
                                     <constraint firstAttribute="height" constant="30" id="jtb-p7-92F"/>
                                 </constraints>
                                 <color key="tintColor" red="0.96092790370000003" green="0.96042305230000002" blue="0.98039609189999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" image="chevron.left" catalog="system"/>
+                                <state key="normal" image="chevron.left" catalog="system">
+                                    <color key="titleColor" red="1" green="0.99997437" blue="0.99999129769999995" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="backButtonPressed:" destination="p9y-47-yOG" eventType="touchUpInside" id="BP6-8j-lnz"/>
                                     <segue destination="UR7-W6-qei" kind="show" identifier="selectedImageToMenu" id="g94-Qv-bj9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a Sticker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fT7-W1-d3j">
-                                <rect key="frame" x="0.0" y="65" width="414" height="45"/>
+                                <rect key="frame" x="0.0" y="105" width="414" height="45"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <color key="textColor" red="0.96092790370000003" green="0.96042305230000002" blue="0.98039609189999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -62,14 +64,14 @@
                         <constraints>
                             <constraint firstItem="lQw-kr-53o" firstAttribute="leading" secondItem="Ynw-E4-1hz" secondAttribute="leading" id="18x-j7-EJc"/>
                             <constraint firstItem="rqE-IW-jdc" firstAttribute="top" secondItem="Ynw-E4-1hz" secondAttribute="top" constant="45" id="9Zu-ab-0kT"/>
-                            <constraint firstItem="lQw-kr-53o" firstAttribute="top" secondItem="fT7-W1-d3j" secondAttribute="bottom" constant="65" id="L24-9Y-6Di"/>
+                            <constraint firstItem="lQw-kr-53o" firstAttribute="top" secondItem="fT7-W1-d3j" secondAttribute="bottom" constant="25" id="L24-9Y-6Di"/>
                             <constraint firstItem="rqE-IW-jdc" firstAttribute="leading" secondItem="Ynw-E4-1hz" secondAttribute="leading" constant="34" id="bUF-Kf-MeX"/>
                             <constraint firstAttribute="trailing" secondItem="lQw-kr-53o" secondAttribute="trailing" id="c3N-px-N97"/>
                             <constraint firstItem="fT7-W1-d3j" firstAttribute="leading" secondItem="Ynw-E4-1hz" secondAttribute="leading" id="ccq-jQ-mGi"/>
                             <constraint firstItem="Ynw-E4-1hz" firstAttribute="trailing" secondItem="fT7-W1-d3j" secondAttribute="trailing" id="fNe-lO-4w7"/>
                             <constraint firstItem="lQw-kr-53o" firstAttribute="top" secondItem="Ynw-E4-1hz" secondAttribute="top" constant="175" id="hqO-oz-hyy"/>
                             <constraint firstAttribute="bottom" secondItem="lQw-kr-53o" secondAttribute="bottom" id="nr4-57-nZU"/>
-                            <constraint firstItem="fT7-W1-d3j" firstAttribute="top" secondItem="Ynw-E4-1hz" secondAttribute="top" constant="65" id="rTP-Th-FHg"/>
+                            <constraint firstItem="fT7-W1-d3j" firstAttribute="top" secondItem="Ynw-E4-1hz" secondAttribute="top" constant="105" id="rTP-Th-FHg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="m1w-Xz-R5v"/>
@@ -108,7 +110,7 @@
                                     <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="babyanimals" id="AC9-Yx-995">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="categoryview" id="AC9-Yx-995">
                                         <rect key="frame" x="10" y="10" width="170" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="M8o-eH-4VE">
@@ -706,7 +708,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4a5-lg-DrA"/>
+        <segue reference="X2l-eg-hcS"/>
+        <segue reference="iTP-do-zad"/>
         <segue reference="g94-Qv-bj9"/>
     </inferredMetricsTieBreakers>
     <resources>
