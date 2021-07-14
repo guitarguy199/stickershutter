@@ -102,10 +102,6 @@ class CreditsViewController: UIViewController, SKPaymentTransactionObserver, SKP
         self.present(alert, animated: true, completion: nil)
     }
 
-    
-
-
-
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         if let product = response.products.first {
             myProduct = product

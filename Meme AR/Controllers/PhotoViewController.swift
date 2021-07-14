@@ -33,16 +33,8 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
+        setupView()
         navigationController?.isNavigationBarHidden = true
-        view.bringSubviewToFront(topLabel)
-        view.bringSubviewToFront(bottomLabel)
-        view.bringSubviewToFront(xButton)
-        view.bringSubviewToFront(downloadOutlet)
-        view.bringSubviewToFront(trashOutlet)
-        view.bringSubviewToFront(shareOutlet)
-        view.bringSubviewToFront(creditsOutlet)
-        view.bringSubviewToFront(labelView)
         labelView.adUnitID = ids.bannerTest
         labelView.rootViewController = self
         labelView.delegate = self
@@ -59,8 +51,16 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-    
+    func setupView() {
+        imageView.image = image
+        view.bringSubviewToFront(topLabel)
+        view.bringSubviewToFront(bottomLabel)
+        view.bringSubviewToFront(xButton)
+        view.bringSubviewToFront(downloadOutlet)
+        view.bringSubviewToFront(trashOutlet)
+        view.bringSubviewToFront(shareOutlet)
+        view.bringSubviewToFront(creditsOutlet)
+        view.bringSubviewToFront(labelView)
     }
     
     func loadAd() {
@@ -75,10 +75,8 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
     func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         print("present ads")
     }
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-       
-
-    }
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {}
+    
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print(error)
     }
@@ -96,9 +94,6 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         let alertView = SPAlertView(title: "Saved to Library", preset: .done)
         alertView.present(duration: 1.5, haptic: .success, completion: nil)
-       
-        
-        
     }
     
     func tapped() {
@@ -106,9 +101,7 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
     }
     
     
-    @IBAction func creditsButton(_ sender: UIButton) {
-       
-    }
+    @IBAction func creditsButton(_ sender: UIButton) {}
     
     @IBAction func deleteButton(_ sender: UIButton) {
         presentAd()
@@ -128,9 +121,6 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
             self.ad?.fullScreenContentDelegate = self
             self.ad?.present(fromRootViewController: self)
         }
-        
-        
-     
     }
     
     

@@ -38,16 +38,10 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
     let productID = "com.tangentsystems.stickershutter.disableads"
 
     override func viewWillAppear(_ animated: Bool) {
-    
-        if let config = arView.session.configuration {
-               let opts: ARSession.RunOptions = [.resetTracking,
-                                                 .removeExistingAnchors,
-                                                 .resetSceneReconstruction]
-            
-               arView.session.run(config, options: opts)
-           }
+        configureARSession()
         registerGestureRecognizer()
         tap.isEnabled = true
+        navigationController?.isNavigationBarHidden = true
         
 
     }
@@ -58,11 +52,14 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
 //        self.arView.debugOptions = [.showFeaturePoints, .showStatistics, .showAnchorOrigins]
 //        self.arView.enableObjectRemoval()
         setupARView()
-      
-        navigationController?.isNavigationBarHidden = true
+        setupAds()
         camButtonAppearance()
         setupARView()
-        
+    }
+    
+    
+    
+    func setupAds() {
         bannerView.adUnitID = ids.bannerTest
         bannerView.rootViewController = self
         bannerView.delegate = self
@@ -75,7 +72,16 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
             bannerView.load(GADRequest())
         }
 
-        
+    }
+    
+    func configureARSession() {
+        if let config = arView.session.configuration {
+               let opts: ARSession.RunOptions = [.resetTracking,
+                                                 .removeExistingAnchors,
+                                                 .resetSceneReconstruction]
+            
+               arView.session.run(config, options: opts)
+           }
     }
     
     
@@ -183,7 +189,7 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         backButton.isHidden = true
         flashButton.isHidden = true
         bannerView.isHidden = true
-         tapped()
+        tapped()
     }
     
     func tapped() {
@@ -191,10 +197,7 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
     }
     
     
-    @IBAction func helpButtonPressed(_ sender: UIButton) {
-    
-
-    }
+    @IBAction func helpButtonPressed(_ sender: UIButton) {}
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
         navigationController?.isNavigationBarHidden = true
