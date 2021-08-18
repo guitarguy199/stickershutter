@@ -9,15 +9,20 @@ import UIKit
 import StoreKit
 
 class CreditsViewController: UIViewController, SKPaymentTransactionObserver, SKProductsRequestDelegate {
-
+    
+//MARK: - Variables and Constants
+    
+    var myProduct: SKProduct?
+    
+//MARK: - IBOutlets
 
     @IBOutlet weak var removeOutlet: UIButton!
     @IBOutlet weak var restoreOutlet: UIButton!
     @IBOutlet weak var labelOne: UILabel!
     @IBOutlet weak var labelTwo: UILabel!
     
-    var myProduct: SKProduct?
-    
+
+//MARK: - View Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +34,17 @@ class CreditsViewController: UIViewController, SKPaymentTransactionObserver, SKP
         navigationController?.isNavigationBarHidden = true
     }
     
+    
+//MARK: - IBActions
 
     @IBAction func privacyPressed(_ sender: UIButton) {
         UIApplication.shared.open(URL(string: "https://tangentsyste.ms/privacy-policy")!)
     }
     
+    
     @IBAction func termsPressed(_ sender: UIButton) {
         UIApplication.shared.open(URL(string: "https://tangentsyste.ms/terms-of-service")!)
     }
-    
-    
     
     
     @IBAction func removePressed(_ sender: UIButton) {
@@ -52,16 +58,14 @@ class CreditsViewController: UIViewController, SKPaymentTransactionObserver, SKP
     }
     
     
-    
     @IBAction func restorePressed(_ sender: UIButton) {
         SKPaymentQueue.default().restoreCompletedTransactions()
         print("pressed")
     }
+
     
     
-    
-    
-    // MARK: In App Purchase Methods
+// MARK:  - In App Purchase Methods
     
     func fetchProducts() {
         let request = SKProductsRequest(productIdentifiers: ["com.tangentsystems.stickershutter.removeallads"])

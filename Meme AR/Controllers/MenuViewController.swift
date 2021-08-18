@@ -9,14 +9,21 @@ import UIKit
 import GoogleMobileAds
 
 
-// APP ID ca-app-pub-6409562125770170~8758566465
-//AD UNIT ID ca-app-pub-6409562125770170/2401682300
-
-//TEST ID ca-app-pub-3940256099942544/2934735716
-
-// iPad marketing attr <a href="https://www.vecteezy.com/free-vector/black">Black Vectors by Vecteezy</a>
-
 class MenuViewController: UIViewController, GADFullScreenContentDelegate {
+    
+//MARK: - Variables and Constants
+    
+    var width = 150.0
+    var cellMarginSize = 16.0
+    
+    let categories = Bundle.main.decode([Categories].self, from: "categories.json")
+    let ids = IDs()
+    let productID = "com.tangentsystems.stickershutter.disableads"
+    
+    var ad: GADInterstitialAd?
+
+    
+//MARK: - IBOutlets
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bannerView: GADBannerView!
@@ -24,66 +31,34 @@ class MenuViewController: UIViewController, GADFullScreenContentDelegate {
     @IBOutlet weak var tutorialView: UIImageView!
     
 
-    let categories = Bundle.main.decode([Categories].self, from: "categories.json")
-    let ids = IDs()
-    
-    var ad: GADInterstitialAd?
-    var width = 150.0
-    var cellMarginSize = 16.0
-    let productID = "com.tangentsystems.stickershutter.disableads"
+//MARK: - View Lifecycles
+
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
-//        resetDefaults()
     }
     
-//    func resetDefaults() {
-//        let defaults = UserDefaults.standard
-//        let dictionary = defaults.dictionaryRepresentation()
-//        dictionary.keys.forEach { key in
-//            defaults.removeObject(forKey: "isFirstTime")
-//        }
-//    }
-//
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        continueOutlet.layer.cornerRadius = 25
-        self.continueOutlet.alpha = 0
-        self.tutorialView.alpha = 0
-
+        checkForPurchase()
+        checkForFirstTime()
+        setupView()
+       
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.setupGridView()
         self.collectionView.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "categoryCellID")
+        
         bannerView.adUnitID = ids.bannerTest
         bannerView.rootViewController = self
         bannerView.delegate = self
-        
-        let status = UserDefaults.standard.bool(forKey: "ads_removed")
-        let defaults = UserDefaults.standard
 
-        if defaults.object(forKey: "isFirstTime") == nil {
-        print("Working")
-            UIView.animate(withDuration: 1.2) {
-                self.continueOutlet.alpha = 1
-                self.tutorialView.alpha = 1
-            }
-            defaults.set("No", forKey: "isFirstTime")
-        } else {
-            tutorialView.isHidden = true
-            continueOutlet.isHidden = true
-            print("Didnt work")
-        }
-        if status {
-            bannerView.isHidden = true
-        } else {
-            bannerView.load(GADRequest())
-            loadAd()
-        }
- 
-        
     }
+    
+
+//MARK: - CollectionView Setup
     
     override func viewDidLayoutSubviews() {
         self.setupGridView()
@@ -99,6 +74,18 @@ class MenuViewController: UIViewController, GADFullScreenContentDelegate {
     }
     
 
+//MARK: - View Setup
+    
+    func setupView() {
+        continueOutlet.layer.cornerRadius = 25
+        self.continueOutlet.alpha = 0
+        self.tutorialView.alpha = 0
+    }
+    
+    
+
+//MARK: - IBActions
+    
     
     @IBAction func continuePressed(_ sender: Any) {
         UIView.animate(withDuration: 0.7) {
@@ -114,19 +101,55 @@ class MenuViewController: UIViewController, GADFullScreenContentDelegate {
         }
     }
     
+
+//MARK: - Load Initial Tutorial View
+    
+    func checkForFirstTime() {
+        
+        let defaults = UserDefaults.standard
+
+        if defaults.object(forKey: "isFirstTime") == nil {
+        print("Working")
+            UIView.animate(withDuration: 1.2) {
+                self.continueOutlet.alpha = 1
+                self.tutorialView.alpha = 1
+            }
+            defaults.set("No", forKey: "isFirstTime")
+        } else {
+            tutorialView.isHidden = true
+            continueOutlet.isHidden = true
+            print("Didnt work")
+        }
+        
+    }
+    
+    
+//MARK: - Check for Purchase
+    
+    func checkForPurchase() {
+        let status = UserDefaults.standard.bool(forKey: "ads_removed")
+        
+        if status {
+            bannerView.isHidden = true
+        } else {
+            bannerView.load(GADRequest())
+            loadAd()
+        }
+    }
+    
+    
+//MARK: - Google AdMob Functions
     
     
     func loadAd() {
-        
         let id = ids.intTest
               GADInterstitialAd.load(withAdUnitID: id, request: GADRequest()) { ad, error in
                    if error != nil { return }
                    self.ad = ad
                    self.ad?.fullScreenContentDelegate = self
-                  
-          
            }
     }
+    
     
     func presentAd() {
         self.ad?.fullScreenContentDelegate = self
@@ -135,18 +158,38 @@ class MenuViewController: UIViewController, GADFullScreenContentDelegate {
 
 }
 
+
 func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
     print("present ads")
 }
+
+
 func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
     print("dimissed ad")
-
 }
+
+
 func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
     print(error)
 }
 
-// MARK: Collection View
+
+//MARK: - Reset UserDefaults (Debugging)
+
+//Call function in ViewDidAppear to reset UserDefaults
+
+    func resetDefaults() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: "isFirstTime")
+        }
+    }
+
+
+
+// MARK: - CollectionView Delegates
+
 
 extension MenuViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -188,7 +231,7 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
 
 
 
-// MARK: GAD Banner Delegate
+// MARK: - GAD Banner Delegate
 
 extension MenuViewController: GADBannerViewDelegate {
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {

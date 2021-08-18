@@ -9,16 +9,18 @@ import UIKit
 import SPAlert
 import GoogleMobileAds
 
-//INTERSTITIAL APP UNIT ID ca-app-pub-6409562125770170/8339532557
-
-
 class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScreenContentDelegate {
+    
+//MARK: - Variables and Constants
     
     let ids = IDs()
 
     var image: UIImage = UIImage()
     
     var ad: GADInterstitialAd?
+    
+    
+//MARK: - IBOutlets
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var xButton: UIButton!
@@ -30,26 +32,25 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var labelView: GADBannerView!
     
+    
+//MARK: - View Lifecycles
+    
  
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        navigationController?.isNavigationBarHidden = true
+        checkForPurchase()
+
         labelView.adUnitID = ids.bannerTest
         labelView.rootViewController = self
         labelView.delegate = self
  
-        
-        let status = UserDefaults.standard.bool(forKey: "ads_removed")
-        
-        if status {
-            labelView.isHidden = true
-        } else {
-            labelView.load(GADRequest())
-            loadAd()
-        }
-       
+        navigationController?.isNavigationBarHidden = true
     }
+    
+    
+//MARK: - View Setup
+    
     
     func setupView() {
         imageView.image = image
@@ -63,23 +64,18 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
         view.bringSubviewToFront(labelView)
     }
     
-    func loadAd() {
-        let id = ids.intTest
-        GADInterstitialAd.load(withAdUnitID: id, request: GADRequest()) { (ad, error) in
-            if error != nil { return }
-            self.ad = ad
-            self.ad?.fullScreenContentDelegate = self
+    
+    private func checkForPurchase() {
+        let status = UserDefaults.standard.bool(forKey: "ads_removed")
+        
+        if status {
+            labelView.isHidden = true
+        } else {
+            labelView.load(GADRequest())
+            loadAd()
         }
     }
-    
-    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        print("present ads")
-    }
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {}
-    
-    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
-        print(error)
-    }
+    //MARK: - IBActions
 
     
     @IBAction func shareButton(_ sender: UIButton) {
@@ -88,7 +84,6 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
         present(ac, animated: true)
     }
     
-    
     @IBAction func downloadButton(_ sender: UIButton) {
         tapped()
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
@@ -96,22 +91,26 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
         alertView.present(duration: 1.5, haptic: .success, completion: nil)
     }
     
+    @IBAction func creditsButton(_ sender: UIButton) {}
+    
+    @IBAction func deleteButton(_ sender: UIButton) { presentAd() }
+    
+    @IBAction func xButton(_ sender: UIButton) {
+        presentAd()
+        performSegue(withIdentifier: "photoToMenu", sender: self)
+    }
+    
+    
+//MARK: - Accessory Functions
+    
+    
     func tapped() {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
     }
     
     
-    @IBAction func creditsButton(_ sender: UIButton) {}
+//MARK: - Google AdMob Functions
     
-    @IBAction func deleteButton(_ sender: UIButton) {
-        presentAd()
-    }
-    
-
-    @IBAction func xButton(_ sender: UIButton) {
-        presentAd()
-        performSegue(withIdentifier: "photoToMenu", sender: self)
-    }
     
     func presentAd() {
         
@@ -124,10 +123,32 @@ class PhotoViewController: UIViewController, GADBannerViewDelegate, GADFullScree
     }
     
     
+    func loadAd() {
+        let id = ids.intTest
+        GADInterstitialAd.load(withAdUnitID: id, request: GADRequest()) { (ad, error) in
+            if error != nil { return }
+            self.ad = ad
+            self.ad?.fullScreenContentDelegate = self
+        }
+    }
+    
+    
+    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("present ads")
+    }
+    
+    
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {}
+    
+    
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print(error)
+    }
+    
+    
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("ad received")
     }
-    
     
 
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {

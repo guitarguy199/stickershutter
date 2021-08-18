@@ -9,14 +9,19 @@ import UIKit
 
 class SelectImageViewController: UIViewController {
     
+//MARK: - Variables and Constants
+    
     lazy var selectedArray = Bundle.main.decode([Meme].self, from: "\(selectedCategory).json")
     var selectedCategory: String = ""
     var width = 150.0
     var cellMarginSize = 16.0
     
+//MARK: - IBOutlets
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     
+//MARK: - View Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,24 +32,33 @@ class SelectImageViewController: UIViewController {
         self.collectionView.register(UINib(nibName: "ImageCell", bundle: nil), forCellWithReuseIdentifier: "imageCellID")
       
     }
+    
+    
+//MARK: - CollectionView Setup
+    
+    
     override func viewDidLayoutSubviews() {
         self.setupGridView()
         self.collectionView.reloadData()
     }
     
   
-    
     func setupGridView() {
         let flow = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
         flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
     }
     
-    @IBAction func backButtonPressed(_ sender: UIButton) {
-    }
     
-
+//MARK: - IBActions
+    
+    @IBAction func backButtonPressed(_ sender: UIButton) {}
+    
 }
+
+
+//MARK: - CollectionView Delegates
+
 
 extension SelectImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

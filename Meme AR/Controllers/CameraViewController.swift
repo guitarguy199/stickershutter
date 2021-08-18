@@ -11,19 +11,20 @@ import SceneKit
 import CoreHaptics
 import GoogleMobileAds
 
-/*
- AdMob ID
- ca-app-pub-6409562125770170~8758566465
-*/
 
 class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecognizerDelegate, UIViewControllerTransitioningDelegate {
 
-
+//MARK: - IBOutlets
+    
     @IBOutlet weak var flashButton: UIButton!
     @IBOutlet weak var arView: ARView!
     @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var bannerView: GADBannerView!
+    @IBOutlet weak var camButtonOutlet: UIButton!
+    
+
+//MARK: - Variables and Constants
 
     var tap: UITapGestureRecognizer!
     
@@ -42,21 +43,32 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         registerGestureRecognizer()
         tap.isEnabled = true
         navigationController?.isNavigationBarHidden = true
-        
-
     }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.arView.debugOptions = [.showFeaturePoints, .showStatistics, .showAnchorOrigins]
-//        self.arView.enableObjectRemoval()
         setupARView()
         setupAds()
         camButtonAppearance()
         setupARView()
+        
+//  MARK: - Debug Options
+//        self.arView.debugOptions = [.showFeaturePoints, .showStatistics, .showAnchorOrigins]
+//        self.arView.enableObjectRemoval()
     }
     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        if let config = arView.session.configuration {
+               let opts: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors, .resetSceneReconstruction]
+               arView.session.run(config, options: opts)
+               kill()
+           }
+    }
+    
+  
+//MARK: - GAD Ad Setup
     
     
     func setupAds() {
@@ -73,43 +85,10 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         }
 
     }
-    
-    func configureARSession() {
-        if let config = arView.session.configuration {
-               let opts: ARSession.RunOptions = [.resetTracking,
-                                                 .removeExistingAnchors,
-                                                 .resetSceneReconstruction]
-            
-               arView.session.run(config, options: opts)
-           }
-    }
-    
-    
-    func kill() {
-        arView.session.pause()
-        arView.removeFromSuperview()
-        arView = nil
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        if let config = arView.session.configuration {
-               let opts: ARSession.RunOptions = [.resetTracking,
-                                                 .removeExistingAnchors,
-                                                 .resetSceneReconstruction]
-            
-               arView.session.run(config, options: opts)
-            kill()
-           }
-    }
- 
-    
-    func registerGestureRecognizer() {
-        tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(gestureRecognizer:)))
-                tap.numberOfTapsRequired = 1
-        arView.addGestureRecognizer(tap)
-        print("screen tapped")
-    }
 
+
+//MARK: - ARSession Setup
+    
     
     func setupARView() {
         arView.automaticallyConfigureSession = false
@@ -118,7 +97,19 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         configuration.environmentTexturing = .automatic
         arView.session.run(configuration)
     }
+    
+    
+    func configureARSession() {
+        if let config = arView.session.configuration {
+               let opts: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors, .resetSceneReconstruction]
+               arView.session.run(config, options: opts)
+           }
+    }
+    
      
+//MARK: - Display Image
+    
+    
     @objc func handleTap(gestureRecognizer: UIGestureRecognizer) {
         
         let sceneLocation = gestureRecognizer.view as! ARView
@@ -132,38 +123,28 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         
         if let tapResults = results.first {
             let mesh = MeshResource.generateBox(width: 0.7, height: 0.001, depth: 0.7, cornerRadius: 0.1, splitFaces: false)
-         
-       tapped()
             let texture = try? TextureResource.load(named: meme!.image)
-                var material = UnlitMaterial()
+            var material = UnlitMaterial()
+           
                 
-                material.baseColor = MaterialColorParameter.texture(texture!)
+            material.baseColor = MaterialColorParameter.texture(texture!)
             material.tintColor = UIColor.white.withAlphaComponent(0.99)
-                let modelEntity = ModelEntity.init(mesh: mesh, materials: [material])
-                let anchorEntity = AnchorEntity(raycastResult: tapResults)
+            let modelEntity = ModelEntity.init(mesh: mesh, materials: [material])
+            let anchorEntity = AnchorEntity(raycastResult: tapResults)
             anchorEntity.name = "CubeAnchor"
-                 anchorEntity.addChild(modelEntity)
-                 arView.scene.addAnchor(anchorEntity)
-                modelEntity.generateCollisionShapes(recursive: true)
+            anchorEntity.addChild(modelEntity)
+            arView.scene.addAnchor(anchorEntity)
+            modelEntity.generateCollisionShapes(recursive: true)
             arView.installGestures([.translation, .rotation, .scale], for: modelEntity)
+            
+            print(texture)
+            tapped()
           }
             tap.isEnabled = false
         }
             
         }
-        
     
-
-    
-
-    @IBOutlet weak var camButtonOutlet: UIButton!
-    
-    func camButtonAppearance() {
-        camButtonOutlet.layer.cornerRadius = 0.5 * camButtonOutlet.bounds.size.width
-        camButtonOutlet.layer.borderWidth = 1.0
-        camButtonOutlet.layer.borderColor = UIColor(white: 1.0, alpha: 0.7).cgColor
-        
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToPhoto" {
@@ -181,7 +162,7 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         }
         }
     
-    
+//  MARK: - IBActions
 
     @IBAction func cameraButton(_ sender: UIButton) {
         camButtonOutlet.isHidden = true
@@ -192,16 +173,38 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         tapped()
     }
     
-    func tapped() {
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
-    }
-    
-    
     @IBAction func helpButtonPressed(_ sender: UIButton) {}
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
         navigationController?.isNavigationBarHidden = true
     }
+
+    @IBAction func flashPressed(_ sender: UIButton) {
+        toggleFlash()
+        tapped()
+    }
+    
+//  MARK: - Accessory Methods
+    
+    
+    func kill() {
+        arView.session.pause()
+        arView.removeFromSuperview()
+        arView = nil
+    }
+ 
+    
+    func registerGestureRecognizer() {
+        tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(gestureRecognizer:)))
+                tap.numberOfTapsRequired = 1
+        arView.addGestureRecognizer(tap)
+        print("screen tapped")
+    }
+    
+    func tapped() {
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+    }
+    
     
     func toggleFlash() {
         guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
@@ -227,13 +230,17 @@ class CameraViewController: UIViewController, ARSessionDelegate,  UIGestureRecog
         }
     }
     
-    @IBAction func flashPressed(_ sender: UIButton) {
-        toggleFlash()
-        tapped()
+    
+    func camButtonAppearance() {
+        camButtonOutlet.layer.cornerRadius = 0.5 * camButtonOutlet.bounds.size.width
+        camButtonOutlet.layer.borderWidth = 1.0
+        camButtonOutlet.layer.borderColor = UIColor(white: 1.0, alpha: 0.7).cgColor
     }
     
 }
 
+
+//MARK: - Screen Capture (Camera)
 
 extension UIView {
     func takeScreenshot() -> UIImage {
@@ -250,6 +257,8 @@ extension UIView {
     }
 }
 
+//MARK: - Google Ad Delegates
+
 extension CameraViewController: GADBannerViewDelegate {
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("ad received")
@@ -262,7 +271,7 @@ extension CameraViewController: GADBannerViewDelegate {
 
 
 
-//Object Removal Method...needs to reset tap count to work
+//MARK: - Object Removal Method...In Progress
 
 //extension ARView {
 //    func enableObjectRemoval() {
